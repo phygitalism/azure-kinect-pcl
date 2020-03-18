@@ -46,7 +46,7 @@ See [mkv file format](https://docs.microsoft.com/en-us/azure/kinect-dk/record-fi
 
 You can download our [example here ](https://drive.phygital.team/d/s/543553085484611131/FFlInsbUEhXWahWC47RYllmc1Ur17Tam-obYgStUWiwc_)
 
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
+It distributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
 
 ## Remarks
 
