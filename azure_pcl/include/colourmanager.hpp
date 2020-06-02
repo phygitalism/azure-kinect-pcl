@@ -25,11 +25,7 @@
 
 #ifndef COLOURMANAGER
 #define COLOURMANAGER
-#include <iostream>
-#include <sstream>
 #include <vector>
-#include <time.h>
-#include <algorithm>
 
 namespace azure
 {
@@ -38,7 +34,7 @@ namespace azure
         /** The CMClassification enum.
      *  These enums represent the type of colour map through their classification.
      */
-        enum class CMClassification {
+        enum class CMClassification{
             SEQUENTIAL,   /**< Represents the sequential colour map - one colour changing in hue. */
             DIVERGING,    /**< Represents the diverging colour map - two colours diverging from a neutral colour. */
             QUALITATIVE,  /**< Represents the qualitative colour map - many differing colours for discrete data. */
@@ -46,7 +42,7 @@ namespace azure
         };
 
         /*! The Colour class - This holds the colour channel values and functions needed to produce RGB (float or int value) or hex values */
-        class Colour {
+        class Colour{
         public:
 
             //! An empty constructor for the class. */
@@ -59,7 +55,8 @@ namespace azure
                   \param B The blue colour channel - Either 0-1 OR 0-255
                   \param A The alpha colour channel - Either 0-1 OR 0-255
                 */
-            Colour(float R, float G, float B, float A) {
+            Colour(float R, float G, float B, float A)
+            {
                 if (R > 1.0f || G > 1.0f || B > 1.0f) {
                     float rVal = (float)R / (float)255.0f;
                     float gVal = (float)G / (float)255.0f;
@@ -75,7 +72,6 @@ namespace azure
                     setB(B);
                     setAlpha(A);
                 }
-
             }
 
             //! A constructor for the Colour class.
@@ -86,7 +82,8 @@ namespace azure
                   \param A The alpha colour channel - float value Either 0-1 OR 0-255
                   \param A The alpha colour channel - float value Either 0-1 OR 0-255
                 */
-            Colour(float R, float G, float B, float A, std::string name) {
+            Colour(float R, float G, float B, float A, std::string name)
+            {
                 setNameID(name);
                 if (R > 1.0f || G > 1.0f || B > 1.0f) {
                     float rVal = (float)R / (float)255.0f;
@@ -103,15 +100,14 @@ namespace azure
                     setB(B);
                     setAlpha(A);
                 }
-
             }
 
             //! A constructor for the Colour class created using a colour hex value
                 /*!
                   \param hex - a string that contains the hex colour value.
                 */
-            Colour(std::string hex) {
-
+            Colour(std::string hex)
+            {
                 std::string r = hex.substr(1, 2);
                 std::string g = hex.substr(3, 2);
                 std::string b = hex.substr(5, 2);
@@ -129,7 +125,6 @@ namespace azure
                 sc << std::hex << b;
                 sc >> newB;
 
-
                 float rVal = (float)newR / (float)255.0f;
                 float gVal = (float)newG / (float)255.0f;
                 float bVal = (float)newB / (float)255.0f;
@@ -143,7 +138,8 @@ namespace azure
             /*!
               \return std::string hex value
             */
-            inline std::string getHexColour() {
+            inline std::string getHexColour()
+            {
                 std::stringstream stream;
                 stream << std::hex << (int)(getR() * 255.0f) << (int)(getG() * 255.0f) << (int)(getB() * 255.0f);
                 std::string result(stream.str());
@@ -154,7 +150,8 @@ namespace azure
             /*!
               \param float R - the red channel value.
             */
-            inline void setR(float R) {
+            inline void setR(float R)
+            {
                 m_R = R;
             }
 
@@ -162,7 +159,8 @@ namespace azure
             /*!
               \param float G - the green channel value.
             */
-            inline void setG(float G) {
+            inline void setG(float G)
+            {
                 m_G = G;
             }
 
@@ -170,7 +168,8 @@ namespace azure
             /*!
               \param float B - the blue channel value.
             */
-            inline void setB(float B) {
+            inline void setB(float B)
+            {
                 m_B = B;
             }
 
@@ -178,7 +177,8 @@ namespace azure
             /*!
               \param float Alpha - the alpha value.
             */
-            inline void setAlpha(float Alpha) {
+            inline void setAlpha(float Alpha)
+            {
                 m_Alpha = Alpha;
             }
 
@@ -186,16 +186,17 @@ namespace azure
             /*!
               \param std::string name - the colour name.
             */
-            inline void setNameID(std::string name) {
+            inline void setNameID(std::string name)
+            {
                 m_NameID = name;
             }
-
 
             //! Gets the red channel value (0-255 int)
             /*!
               \return int R channel value.
             */
-            inline int getIntR() {
+            inline int getIntR()
+            {
                 return m_R * 255.0f;
             }
 
@@ -203,7 +204,8 @@ namespace azure
             /*!
               \return int B channel value.
             */
-            inline int getIntG() {
+            inline int getIntG()
+            {
                 return m_G * 255.0f;
             }
 
@@ -211,7 +213,8 @@ namespace azure
             /*!
               \return int B channel value.
             */
-            inline int getIntB() {
+            inline int getIntB()
+            {
                 return m_B * 255.0f;
             }
 
@@ -219,7 +222,8 @@ namespace azure
             /*!
               \return float R channel value.
             */
-            inline float getR() {
+            inline float getR()
+            {
                 return m_R;
             }
 
@@ -227,7 +231,8 @@ namespace azure
             /*!
               \return float G channel value.
             */
-            inline float getG() {
+            inline float getG()
+            {
                 return m_G;
             }
 
@@ -235,7 +240,8 @@ namespace azure
             /*!
               \return float B channel value.
             */
-            inline float getB() {
+            inline float getB()
+            {
                 return m_B;
             }
 
@@ -243,7 +249,8 @@ namespace azure
             /*!
               \return float alpha channel value.
             */
-            inline float getAlpha() {
+            inline float getAlpha()
+            {
                 return m_Alpha;
             }
 
@@ -251,7 +258,8 @@ namespace azure
             /*!
               \return std::string m_NameID name value;
             */
-            inline std::string getNameID() {
+            inline std::string getNameID()
+            {
                 return m_NameID;
             }
 
@@ -265,32 +273,37 @@ namespace azure
         };
 
         /*! This class holds a vector a colours which make up the colours of the colour map */
-        class ColourMap {
+        class ColourMap{
         public:
 
-            ColourMap(std::string name = "") 
+            ColourMap(std::string name = "")
             {
                 getMapName() = name;
             }
 
-            inline void addColour(Colour col) {
+            inline void addColour(Colour col)
+            {
                 getColourList().push_back(col);
             }
-            inline void addColour(float R, float G, float B, float F) {
+            inline void addColour(float R, float G, float B, float F)
+            {
                 Colour col(R, G, B, F);
                 addColour(col);
             }
-            inline void addColour(float R, float G, float B, float F, std::string name) {
+            inline void addColour(float R, float G, float B, float F, std::string name)
+            {
                 Colour col(R, G, B, F);
                 col.setNameID(name);
                 addColour(col);
             }
 
-            inline Colour& operator[](const int i) {
+            inline Colour & operator[](const int i)
+            {
                 return m_ColourList[i];
             }
 
-            inline Colour& operator[](const std::string name) {
+            inline Colour & operator[](const std::string name)
+            {
                 for (int i = 0; i < m_ColourList.size(); i++) {
                     if (m_ColourList[i].getNameID() == name) {
                         return m_ColourList[i];
@@ -300,43 +313,53 @@ namespace azure
                 return Colour(0.0f, 0.0f, 0.0f, 1.0f, "NoColour");
             }
 
-            inline const Colour& operator[](const int i)const {
+            inline const Colour & operator[](const int i)const
+            {
                 return m_ColourList[i];
             }
 
-            inline std::vector<Colour>& getColourList() {
+            inline std::vector<Colour> & getColourList()
+            {
                 return m_ColourList;
             }
 
-            inline const std::vector<Colour>& getColourList()const {
+            inline const std::vector<Colour> & getColourList()const
+            {
                 return m_ColourList;
             }
 
-            inline std::string getMapName() {
+            inline std::string getMapName()
+            {
                 return m_MapName;
             }
 
-            inline int classCount() {
-                m_ColourList.size();
+            inline int classCount()
+            {
+                return m_ColourList.size();
             }
 
-            inline void setMapName(std::string name) {
+            inline void setMapName(std::string name)
+            {
                 m_MapName = name;
             }
 
-            inline CMClassification& getClassification() {
+            inline CMClassification & getClassification()
+            {
                 return m_Cls;
             }
 
-            inline void setClassification(CMClassification cls) {
+            inline void setClassification(CMClassification cls)
+            {
                 m_Cls = cls;
             }
 
-            inline int getIndex() {
+            inline int getIndex()
+            {
                 return m_Index;
             }
 
-            inline void setIndex(int index) {
+            inline void setIndex(int index)
+            {
                 m_Index = index;
             }
 
@@ -348,85 +371,107 @@ namespace azure
         };
 
         /*! The CMList holds a list of colour maps which the user can select from to set the currently used  colour map. */
-        class CMList {
+        class CMList{
         public:
 
-            inline static std::vector<ColourMap> getMapList(CMClassification cls = CMClassification::ANY) {
+            inline static std::vector<ColourMap> getMapList(CMClassification cls = CMClassification::ANY)
+            {
                 if (cls == CMClassification::ANY) {
                     return MapList();
                 }
 
                 std::vector<ColourMap> filtered;
-                std::copy_if(MapList().begin(), MapList().end(), std::back_inserter(filtered), [&](ColourMap& cm) {
+                std::copy_if(MapList().begin(), MapList().end(), std::back_inserter(filtered), [&](ColourMap & cm) {
                     return cls == cm.getClassification();
                     });
 
                 return filtered;
             }
 
-            inline static void addColourMap(ColourMap map) {
+            inline static void addColourMap(ColourMap map)
+            {
                 MapList().push_back(map);
             }
 
-            inline static std::vector<ColourMap>& returnCompleteMapList() {
+            inline static std::vector<ColourMap> & returnCompleteMapList()
+            {
                 return MapList();
             }
 
-            inline static void setupIndexesInList() {
+            inline static void setupIndexesInList()
+            {
                 for (int index = 0; index < MapList().size(); index++) {
                     MapList()[index].setIndex(index);
                 }
             }
 
         private:
-            static std::vector<ColourMap>& MapList() { static std::vector<ColourMap> m_MapList; return m_MapList; }
+            static std::vector<ColourMap> & MapList()
+            {
+                static std::vector<ColourMap> m_MapList; return m_MapList;
+            }
         };
 
         /*! The ColourManager class is the main manager for the colour maps. It handles the calculations of colour values and the current colour map.*/
-        class ColourManager {
+        class ColourManager{
         public:
 
-            static int& ColourMapIndex() { static int CMI{}; return CMI; }
-            static void setColourMapIndex(int index) {
+            static int & ColourMapIndex()
+            {
+                static int CMI{}; return CMI;
+            }
+            static void setColourMapIndex(int index)
+            {
                 ColourMapIndex() = index;
             }
-            static bool& InvertColourMapFlag() { static bool ICM{ false }; return ICM; }
+            static bool & InvertColourMapFlag()
+            {
+                static bool ICM{ false }; return ICM;
+            }
 
-            static void InvertColourMap() {
+            static void InvertColourMap()
+            {
                 InvertColourMapFlag() = !InvertColourMapFlag();
             }
 
-            inline float getUpperRange() {
+            inline float getUpperRange()
+            {
                 return m_UpperRange;
             }
 
-            inline void setUpperRange(float UpperRange) {
+            inline void setUpperRange(float UpperRange)
+            {
                 m_UpperRange = UpperRange;
             }
 
-            inline float getLowerRange() {
+            inline float getLowerRange()
+            {
                 return m_LowerRange;
             }
 
-            inline void setLowerRange(float LowerRange) {
+            inline void setLowerRange(float LowerRange)
+            {
                 m_LowerRange = LowerRange;
             }
 
-            inline ColourMap& getCurrentColourMap() {
+            inline ColourMap & getCurrentColourMap()
+            {
                 return CurrentColourMap();
             }
 
-            static inline void setCurrentColourMap(ColourMap& map) {
+            static inline void setCurrentColourMap(ColourMap & map)
+            {
                 ColourMapIndex() = map.getIndex();
                 CurrentColourMap() = map;
             }
 
-            inline CMList& getCMList() {
+            inline CMList & getCMList()
+            {
                 return ColourMapList();
             }
 
-            static void Init_ColourManager() {
-
+            static void Init_ColourManager()
+            {
                 ColourMap redGreen("Red->Green");
                 redGreen.setClassification(CMClassification::DIVERGING);
                 redGreen.addColour(1.0f, 0.0f, 0.0f, 1.0f);
@@ -531,15 +576,16 @@ namespace azure
 
                 //Add indexes to the colour maps
                 ColourMapList().setupIndexesInList();
-
             }
 
-            inline static void setCurrentColourMap() {
+            inline static void setCurrentColourMap()
+            {
                 CurrentColourMap() = ColourMapList().getMapList()[ColourMapIndex()];
                 checkInvertedColours();
             }
 
-            inline static ColourMap returnRandomColourMap(int seed = -1, int listSize = 10) {
+            inline static ColourMap returnRandomColourMap(int seed = -1, int listSize = 10)
+            {
                 ColourMap list;
                 list.setClassification(CMClassification::QUALITATIVE);
                 if (seed == -1) {
@@ -560,11 +606,15 @@ namespace azure
                 return list;
             }
 
-            inline Colour getInterpolatedColour(float value) {
-
+            inline Colour getInterpolatedColour(float value)
+            {
                 //This ceils or floors any values outside of the range to prevent componding errors.
-                if (value <= getLowerRange()) { value = getLowerRange(); }
-                if (value >= getUpperRange()) { value = getUpperRange(); }
+                if (value <= getLowerRange()) {
+                    value = getLowerRange();
+                }
+                if (value >= getUpperRange()) {
+                    value = getUpperRange();
+                }
                 Colour colourOutput;
                 float distance = abs((float)getUpperRange() - (float)getLowerRange());
                 float valueAlongRange = (float)abs(value - getLowerRange()) / (float)abs(distance);
@@ -583,7 +633,6 @@ namespace azure
                     float upperSegemnt = (float)(i) * (float)ratioSegment;
 
                     if (valueAlongRange >= lowerSegment && valueAlongRange <= upperSegemnt) {
-
                         ratioThroughSegment = ((float)(valueAlongRange - lowerSegment) / (float)(upperSegemnt - lowerSegment));
 
                         Colour colour1 = CurrentColourMap().getColourList()[i - 1];
@@ -635,18 +684,21 @@ namespace azure
                         }
 
                         return colourOutput;
-
                     }
                 }
 
                 return colourOutput;
-
             }
 
-            inline Colour getClassColour(float value) {
+            inline Colour getClassColour(float value)
+            {
                 //This ceils or floors any values outside of the range to prevent componding errors.
-                if (value <= getLowerRange()) { value = getLowerRange(); }
-                if (value >= getUpperRange()) { value = getUpperRange(); }
+                if (value <= getLowerRange()) {
+                    value = getLowerRange();
+                }
+                if (value >= getUpperRange()) {
+                    value = getUpperRange();
+                }
                 Colour colourOutput(0, 0, 0, 1);
                 float distance = abs((float)getUpperRange() - (float)getLowerRange());
                 float valueAlongRange = (float)abs(value - getLowerRange()) / (float)abs(distance);
@@ -669,7 +721,8 @@ namespace azure
                 return colourOutput;
             }
 
-            inline Colour getColourFromSeed(unsigned int seed) {
+            inline Colour getColourFromSeed(unsigned int seed)
+            {
                 std::srand(seed);
                 float R = (float)std::rand() / (float)RAND_MAX;
                 float G = (float)std::rand() / (float)RAND_MAX;
@@ -678,7 +731,8 @@ namespace azure
                 return c;
             }
 
-            inline Colour getColourFromIndex(int index) {
+            inline Colour getColourFromIndex(int index)
+            {
                 try {
                     if (index < CurrentColourMap().getColourList().size() && index >= 0) {
                         return CurrentColourMap()[index];
@@ -692,7 +746,8 @@ namespace azure
                 }
             }
 
-            inline Colour getColourFromName(std::string name) {
+            inline Colour getColourFromName(std::string name)
+            {
                 try {
                     for (int i = 0; i < CurrentColourMap().getColourList().size(); i++) {
                         if (CurrentColourMap()[i].getNameID() == name) {
@@ -707,7 +762,8 @@ namespace azure
                 }
             }
 
-            ColourManager(float lowerValue, float upperValue) {
+            ColourManager(float lowerValue, float upperValue)
+            {
                 setUpperRange(upperValue);
                 setLowerRange(lowerValue);
                 setCurrentColourMap();
@@ -715,13 +771,20 @@ namespace azure
 
         private:
 
-            static ColourMap& CurrentColourMap() { static ColourMap m_ColourList; return m_ColourList; }
-            static CMList& ColourMapList() { static CMList m_ColourMapList; return m_ColourMapList; }
+            static ColourMap & CurrentColourMap()
+            {
+                static ColourMap m_ColourList; return m_ColourList;
+            }
+            static CMList & ColourMapList()
+            {
+                static CMList m_ColourMapList; return m_ColourMapList;
+            }
 
             float m_UpperRange;
             float m_LowerRange;
 
-            inline static void checkInvertedColours() {
+            inline static void checkInvertedColours()
+            {
                 if (InvertColourMapFlag()) {
                     std::reverse(CurrentColourMap().getColourList().begin(), CurrentColourMap().getColourList().end());
                 }
@@ -729,6 +792,5 @@ namespace azure
         };
     }
 }
-
 
 #endif // COLOURMANAGER

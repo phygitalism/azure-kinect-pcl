@@ -11,7 +11,7 @@ azure::PointCloud::Ptr azure::cluster::euclidean_clustering(azure::PointCloud::C
     // Create the filtering object: downsample the dataset using a leaf size of 1cm
     pcl::VoxelGrid<PointCloud::PointType> vg;
     vg.setInputCloud(input_point_cloud);
-    vg.setLeafSize(0.01f, 0.01f, 0.01f);
+    vg.setLeafSize(0.015f, 0.015f, 0.015f);
     vg.setFilterFieldName("z");
     vg.setFilterLimits(0, 1.6);
     vg.filter(*cloud_filtered);
@@ -24,7 +24,7 @@ azure::PointCloud::Ptr azure::cluster::euclidean_clustering(azure::PointCloud::C
     seg.setModelType(pcl::SACMODEL_PLANE);
     seg.setAxis(Eigen::Vector3f{ 0, 1, 0 });
     seg.setMethodType(pcl::SAC_RANSAC);
-    seg.setMaxIterations(50);
+    seg.setMaxIterations(25);
     seg.setDistanceThreshold(0.01);
     seg.setEpsAngle(DEG2RAD(5));
 
@@ -38,7 +38,7 @@ azure::PointCloud::Ptr azure::cluster::euclidean_clustering(azure::PointCloud::C
     extract.setInputCloud(cloud_filtered);
     extract.setIndices(inliers);
     extract.filter(*cloud_cluster);
-    
+
     extract.setNegative(true);
     //Remove the planar inliers, extract the rest
     extract.filter(*cloud_f);
@@ -59,25 +59,24 @@ azure::PointCloud::Ptr azure::cluster::euclidean_clustering(azure::PointCloud::C
 
     color::ColourManager colour_manager(0, cluster_indices.size() - 1);
 
-    int j{};
+    size_t j{};
 
     for (auto it = cluster_indices.cbegin(); it != cluster_indices.cend(); ++it)
     {
-            for (auto pit = it->indices.cbegin(); pit != it->indices.cend(); ++pit)
-            {
-                const auto& point = cloud_filtered->points[*pit];
-                auto color = colour_manager.getInterpolatedColour(j);
-                PointCloud::PointType color_point{ static_cast<uint8_t>(color.getIntR()), static_cast<uint8_t>(color.getIntG()), static_cast<uint8_t>(color.getIntB()) };
+        for (auto pit = it->indices.cbegin(); pit != it->indices.cend(); ++pit)
+        {
+            const auto & point = cloud_filtered->points[*pit];
+            auto color = colour_manager.getInterpolatedColour(j);
+            PointCloud::PointType color_point{ static_cast<uint8_t>(color.getIntR()), static_cast<uint8_t>(color.getIntG()), static_cast<uint8_t>(color.getIntB()) };
 
-                color_point.x = point.x;
-                color_point.y = point.y;
-                color_point.z = point.z;
+            color_point.x = point.x;
+            color_point.y = point.y;
+            color_point.z = point.z;
 
-                cloud_cluster->push_back(color_point);
-            }
+            cloud_cluster->push_back(color_point);
+        }
         j++;
     }
 
     return cloud_cluster;
-
 }
