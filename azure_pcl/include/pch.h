@@ -14,15 +14,9 @@
 #include <pcl/segmentation/extract_clusters.h>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
+#include <pcl/visualization/cloud_viewer.h>
 
 #include <boost/lockfree/queue.hpp>
 
 #include <k4a/k4a.hpp>
 #include <k4arecord/playback.hpp>
-
-namespace azure
-{
-    using LockFreeQueue = boost::lockfree::queue<k4a_image_t, boost::lockfree::fixed_sized<true>>;
-    using PointT = ::pcl::PointXYZRGB;
-    using PointCloud = ::pcl::PointCloud<PointT>;
-}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pch.h"
+#include "common.h"
 #include "point_cloud_utils.h"
 
 namespace azure

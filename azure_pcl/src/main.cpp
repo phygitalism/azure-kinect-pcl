@@ -1,6 +1,4 @@
-#include <pcl/visualization/cloud_viewer.h>
-
-#include "pch.h"
+#include "common.h"
 #include "kinect_reader.h"
 #include "pcl_clustering.h"
 

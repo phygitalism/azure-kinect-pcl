@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED)
+find_package(Boost 1.71 REQUIRED)
 find_package(k4a REQUIRED)
 find_package(k4arecord REQUIRED)
 find_package(PCL 1.10 CONFIG COMPONENTS REQUIRED common visualization kdtree segmentation filters)
@@ -12,5 +12,7 @@ add_executable(${PROJECT_NAME} ${_headers} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 target_include_directories(${PROJECT_NAME} PRIVATE ${_include_dir} PRIVATE ${PCL_INCLUDE_DIRS})
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${PCL_DEFINITIONS})
+target_link_libraries(${PROJECT_NAME} Boost::headers k4a::k4a k4a::k4arecord ${PCL_LIBRARIES})
+target_precompile_headers(${PROJECT_NAME} PRIVATE ${_include_dir}/pch.h)
 unset(_include_dir)
-target_link_libraries(${PROJECT_NAME} Boost::boost k4a::k4a k4a::k4arecord ${PCL_LIBRARIES})
+
