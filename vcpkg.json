@@ -13,7 +13,8 @@
             {
                 "name": "pcl",
                 "features": [ 
-                    "opengl"
+                    "opengl",
+                    "vtk"
                 ],
                 "version>=": "1.11.0"
             }

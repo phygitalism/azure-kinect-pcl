@@ -10,7 +10,7 @@
             "name": "linux-ninja",
             "displayName": "Linux ninja build",
             "description": "Linux build using Ninja generator",
-            "generator": "Ninja",
+            "generator": "Ninga",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": {
