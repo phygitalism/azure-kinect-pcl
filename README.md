@@ -11,7 +11,7 @@ Point cloud segmentation with [PCL](https://github.com/PointCloudLibrary/pcl).
 1. [Azure Kinect SDK (k4a and k4arecord)](https://github.com/microsoft/Azure-Kinect-Sensor-SDK). Also you need [Depth Engine](https://github.com/microsoft/Azure-Kinect-Sensor-SDK/blob/develop/docs/depthengine.md).
 2. PCL 1.10.
 3. Boost lockfree.
-3. CMake 3.17 or higher.
+3. CMake 3.20 or higher.
 4. Compiler with support C++14.
 
 ## How to run

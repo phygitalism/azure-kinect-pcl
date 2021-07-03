@@ -1,0 +1,37 @@
+{
+    "name": "azure-kinect-pcl",
+    "version-string": "0.1.0",
+    "dependencies": [
+            {
+                "name": "boost-lockfree",
+                "version>=": "1.71.0"
+            },
+            {
+                "name": "azure-kinect-sensor-sdk",
+                "version>=": "1.4.0"
+            },
+            {
+                "name": "pcl",
+                "features": [ 
+                    "opengl"
+                ],
+                "version>=": "1.11.0"
+            }
+    ],
+    "overrides": [
+        {
+            "name": "boost-lockfree",
+            "version": "1.73.0"
+        },
+        {
+            "name": "azure-kinect-sensor-sdk",
+            "version": "1.4.1"
+        },
+        {
+            "name": "pcl",
+            "version": "1.11.0",
+            "port-version": 3
+        }
+    ],
+    "builtin-baseline": "5568f110b509a9fd90711978a7cb76bae75bb092"
+}

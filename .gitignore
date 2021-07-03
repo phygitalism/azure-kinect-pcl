@@ -36,3 +36,7 @@
 .vscode/
 
 [Bb]uild/
+vcpkg_installed/
+
+!CMakePresets.json
+!vcpkg.json
