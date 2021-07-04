@@ -9,14 +9,6 @@
             {
                 "name": "azure-kinect-sensor-sdk",
                 "version>=": "1.4.0"
-            },
-            {
-                "name": "pcl",
-                "features": [ 
-                    "opengl",
-                    "vtk"
-                ],
-                "version>=": "1.11.0"
             }
     ],
     "overrides": [
@@ -27,11 +19,6 @@
         {
             "name": "azure-kinect-sensor-sdk",
             "version": "1.4.1"
-        },
-        {
-            "name": "pcl",
-            "version": "1.11.0",
-            "port-version": 3
         }
     ],
     "builtin-baseline": "5568f110b509a9fd90711978a7cb76bae75bb092"

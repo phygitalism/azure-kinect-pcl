@@ -1,7 +1,7 @@
 find_package(Boost 1.73 REQUIRED)
 find_package(k4a REQUIRED)
 find_package(k4arecord REQUIRED)
-find_package(PCL 1.10 CONFIG COMPONENTS REQUIRED common visualization kdtree segmentation filters)
+find_package(PCL 1.10 COMPONENTS REQUIRED common visualization kdtree segmentation filters)
 
 set(_include_dir ${CMAKE_CURRENT_SOURCE_DIR}/include)
 

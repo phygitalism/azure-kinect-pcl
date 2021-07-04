@@ -72,7 +72,17 @@ jobs:
       - name: Install OpenGL and additional dependencies
         run: |
           sudo apt update
-          sudo apt install -y ninja-build autoconf libudev-dev libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev
+          sudo apt install -y ninja-build autoconf \
+            libudev-dev \
+            libxinerama-dev \
+            libxcursor-dev \
+            xorg-dev \
+            libglu1-mesa-dev \
+            libpcl-common1.10 \
+            libpcl-filters1.10 \
+            libpcl-kdtree1.10 \
+            libpcl-segmentation1.10 \
+            libpcl-visualization1.10
 
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v6
@@ -86,8 +96,8 @@ jobs:
       - name: Install dependencies
         run: ./vcpkg/vcpkg install --triplet x64-linux --clean-after-build
 
-      # - name: Configure project
-      #   run: cmake --preset linux-ninja
+      - name: Configure project
+        run: cmake --preset linux-ninja
 
-      # - name: Build project
-      #   run: cmake --build ./build
+      - name: Build project
+        run: cmake --build ./build
