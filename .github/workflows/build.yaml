@@ -72,7 +72,7 @@ jobs:
       - name: Install OpenGL and additional dependencies
         run: |
           sudo apt update
-          sudo apt install -y ninja-build autoconf libudev-dev xorg libglu1-mesa
+          sudo apt install -y ninja-build autoconf libudev-dev libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev
 
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v6
