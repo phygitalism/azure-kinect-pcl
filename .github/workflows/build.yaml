@@ -129,8 +129,8 @@ jobs:
           cmake --build ./build --config Release --target install
           rm -r ${{ github.workspace }}/pcl-source
 
-      # - name: Configure project
-      #   run: cmake --preset linux-ninja -DPCL_DIR:PATH=${{ env.PCL_INSTALL_PREFIX }}/share/pcl-${{ env.PCL_MAJOR_VERSION }}
+      - name: Configure project
+        run: cmake --preset linux-ninja -DPCL_DIR:PATH=${{ env.PCL_INSTALL_PREFIX }}/share/pcl-${{ env.PCL_MAJOR_VERSION }}
 
-      # - name: Build project
-      #   run: cmake --build ./build --config Release
+      - name: Build project
+        run: cmake --build ./build --config Release

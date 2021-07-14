@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
 
     LockFreeQueue queue(20);
 
-    std::atomic_bool is_stop = false;
+    std::atomic_bool is_stop{false};
 
     k4a_playback_t playback = azure::io::open_reader(path_to_file);
 

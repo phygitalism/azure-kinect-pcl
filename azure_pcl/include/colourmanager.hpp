@@ -302,7 +302,7 @@ namespace azure
                 return m_ColourList[i];
             }
 
-            inline Colour & operator[](const std::string name)
+            inline Colour operator[](const std::string name)
             {
                 for (int i = 0; i < m_ColourList.size(); i++) {
                     if (m_ColourList[i].getNameID() == name) {
