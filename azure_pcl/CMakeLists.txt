@@ -21,5 +21,9 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ${PCL_DEFINITIONS})
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${_include_dir}/pch.h)
 target_link_libraries(${PROJECT_NAME} PRIVATE Boost::headers PRIVATE ${PCL_LIBRARIES} PRIVATE k4a::k4arecord PRIVATE k4a::k4a)
 
+if(UNIX)
+    target_link_libraries(${PROJECT_NAME} PRIVATE udev) 
+endif()
+
 unset(_include_dir)
 
