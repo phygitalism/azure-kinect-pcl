@@ -13,10 +13,17 @@ ${CMAKE_CURRENT_SOURCE_DIR}/src/kinect_reader.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/src/point_cloud_utils.cpp 
 ${CMAKE_CURRENT_SOURCE_DIR}/src/pcl_clustering.cpp)
 
+
+
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 target_include_directories(${PROJECT_NAME} PRIVATE ${_include_dir} PRIVATE ${PCL_INCLUDE_DIRS})
 target_compile_definitions(${PROJECT_NAME} PRIVATE ${PCL_DEFINITIONS})
-target_link_libraries(${PROJECT_NAME} Boost::headers k4a::k4a k4a::k4arecord ${PCL_LIBRARIES})
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${_include_dir}/pch.h)
+target_link_libraries(${PROJECT_NAME} PRIVATE Boost::headers PRIVATE ${PCL_LIBRARIES} PRIVATE k4a::k4arecord PRIVATE k4a::k4a)
+
+if(UNIX)
+    target_link_libraries(${PROJECT_NAME} PRIVATE udev) 
+endif()
+
 unset(_include_dir)
 
