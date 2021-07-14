@@ -7,11 +7,42 @@
                 "version>=": "1.71.0"
             },
             {
+                "name": "boost",
+                "version>=": "1.71.0"
+            },
+            {
                 "name": "azure-kinect-sensor-sdk",
                 "version>=": "1.4.0"
+            },
+            {
+                "name": "vtk",
+                "features": [
+                    "opengl"
+                ],
+                "version>=": "8.2.0"
+            },
+            {
+                "name": "proj4",
+                "version>=": "6.0.0"
+            },
+            {
+                "name": "freetype",
+                "version>=": "2.9.0"
+            },
+            {
+                "name": "flann",
+                "version>=": "2019-04-07"
+            },
+            {
+                "name": "eigen3",
+                "version>=": "3.3.0"
             }
     ],
     "overrides": [
+        {
+            "name": "boost",
+            "version": "1.73.0"
+        },
         {
             "name": "boost-lockfree",
             "version": "1.73.0"
@@ -19,6 +50,28 @@
         {
             "name": "azure-kinect-sensor-sdk",
             "version": "1.4.1"
+        },
+        {
+            "name": "vtk",
+            "version-string": "8.2.0-13"
+        },
+        {
+            "name": "freetype",
+            "version": "2.9.1"
+        },
+        {
+            "name": "proj4",
+            "version": "6.3.1",
+            "port-version": 3
+        },
+        {
+            "name": "flann",
+            "version-string": "2019-04-07",
+            "port-version": 1
+        },
+        {
+            "name": "eigen3",
+            "version": "3.3.9"
         }
     ],
     "builtin-baseline": "5568f110b509a9fd90711978a7cb76bae75bb092"

@@ -7,51 +7,7 @@ on:
     branches: [ master, develop ]
   workflow_dispatch:
 
-jobs:
-  # windows-build:
-  #   name: Windows build
-  #   runs-on: windows-2019
-
-  #   env:
-  #     BUILD_DIR: '${{ github.workspace }}\build'
-  #     CMAKE_BUILD_PARALLEL_LEVEL: 2
-  #     CGAL_VERSION: CGAL-5.0.4
-  #     VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}\bin-cache'
-
-    # steps:
-    #   - uses: actions/checkout@v2
-    #     with:
-    #       submodules: true
-    #       fetch-depth: '0'
-      
-    #   - name: Create vcpkg binary cache
-    #     run: New-Item -ItemType Directory ${{ env.VCPKG_DEFAULT_BINARY_CACHE }} 
-
-    #   - name: Restore artifacts, or setup vcpkg (do not install any package)
-    #     uses: lukka/run-vcpkg@v6
-    #     with:
-    #       setupOnly: true
-    #       vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-    #       appendedCacheKey: ${{ hashFiles( '**/vcpkg.json' ) }}
-    #       vcpkgTriplet: ${{ matrix.triplet }}
-    #       additionalCachedPaths: ${{ github.workspace }}/vcpkg_installed;${{ env.VCPKG_DEFAULT_BINARY_CACHE }}
-
-    #   - name: Download binary CGAL 5.0
-    #     run: |
-    #       (New-Object System.Net.WebClient).DownloadFile("https://github.com/CGAL/cgal/releases/download/v5.0.4/${{ env.CGAL_VERSION }}-library.zip", "${{ env.CGAL_VERSION }}-library.zip")
-    #       Expand-Archive ./${{ env.CGAL_VERSION }}-library.zip -DestinationPath ..
-    #       ls ../${{ env.CGAL_VERSION }}/lib/cmake/CGAL
-
-    #   - name: Install dependencies
-    #     run: |
-    #      ./vcpkg/vcpkg.exe install --triplet x64-windows --clean-after-build
-
-    #   - name: Configure project
-    #     run: cmake --preset windows-only -DCGAL_DIR="${{ github.workspace }}/../${{ env.CGAL_VERSION }}/lib/cmake/CGAL"
-      
-    #   - name: Build project
-    #     run: cmake --build ${{ env.BUILD_DIR }}
-  
+jobs:  
   linux-build:
     name: Linux build
     runs-on: ubuntu-20.04
@@ -59,6 +15,9 @@ jobs:
     env:
       CMAKE_BUILD_PARALLEL_LEVEL: 2
       VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}/bin-cache'
+      PCL_INSTALL_PREFIX: '${{ github.workspace }}/pcl-build'
+      PCL_VERSION: 1.10.1
+      ARC: x64-linux
 
     steps:
       - uses: actions/checkout@v2
@@ -72,17 +31,25 @@ jobs:
       - name: Install OpenGL and additional dependencies
         run: |
           sudo apt update
-          sudo apt install -y ninja-build autoconf \
+          sudo apt install -y ninja-build \
+            autoconf \
             libudev-dev \
             libxinerama-dev \
             libxcursor-dev \
             xorg-dev \
             libglu1-mesa-dev \
-            libpcl-common1.10 \
-            libpcl-filters1.10 \
-            libpcl-kdtree1.10 \
-            libpcl-segmentation1.10 \
-            libpcl-visualization1.10
+            build-essential \
+            wget \
+            curl \
+            zip \
+            unzip \
+            tar \
+            pkg-config \
+            dh-autoreconf \
+            libxcursor-dev \
+            xorg-dev \
+            libglu1-mesa-dev \
+            libxt-dev
 
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v6
@@ -90,14 +57,56 @@ jobs:
           setupOnly: true
           vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           appendedCacheKey: ${{ hashFiles( '**/vcpkg.json' ) }}
-          vcpkgTriplet: ${{ matrix.triplet }}
           additionalCachedPaths: ${{ github.workspace }}/vcpkg_installed;${{ env.VCPKG_DEFAULT_BINARY_CACHE }}
 
       - name: Install dependencies
-        run: ./vcpkg/vcpkg install --triplet x64-linux --clean-after-build
+        run: ./vcpkg/vcpkg install --triplet ${{ env.ARC }} --clean-after-build
+      
+      - name: Cache PCL
+        id: cache-pcl
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PCL_INSTALL_PREFIX }}
+          key: ${{ runner.os }}-pcl
 
-      - name: Configure project
-        run: cmake --preset linux-ninja
+      - name: Download PCL ${{ env.PCL_VERSION }} release
+        if: steps.ache-pcl.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ${{ env.PCL_INSTALL_PREFIX }}
+          mkdir -p ${{ github.workspace }}/pcl-source
+          cd ${{ github.workspace }}/pcl-source
+          wget https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-${PCL_VERSION}.tar.gz
+          tar -xvf ./pcl-${PCL_VERSION}.tar.gz
+          rm ./pcl-${PCL_VERSION}.tar.gz
 
-      - name: Build project
-        run: cmake --build ./build
+      - name: Configure PCL
+        if: steps.ache-pcl.outputs.cache-hit != 'true'
+        working-directory: ${{ github.workspace }}/pcl-source
+        run: |
+          cmake -GNinja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake \
+          -DOpenGL_GL_PREFERENCE=GLVND \
+          -DFLANN_INCLUDE_DIR:PATH=${{ github.workspace }}/vcpkg_installed/${{ env.ARC }}/include \
+          -DBoost_INCLUDE_DIR:PATH=${{ github.workspace }}/vcpkg_installed/${{ env.ARC }}/include \
+          -DEIGEN_INCLUDE_DIR:PATH=${{ github.workspace }}/vcpkg_installed/${{ env.ARC }}/include \
+          -DVTK_DIR=${{ github.workspace }}/vcpkg_installed/${{ env.ARC }}/share/vtk \
+          -DFLANN_LIBRARY:PATH=${{ github.workspace }}/vcpkg_installed/${{ env.ARC }}/lib/libflann_cpp.a \
+          -Dpugixml_DIR=${{ github.workspace }}/vcpkg_installed/${{ env.ARC }}/share/pugixml \
+          -DCMAKE_INSTALL_PREFIX=${{ env.PCL_INSTALL_PREFIX }}
+          -S . -B ./build
+
+      - name: Build PCL
+        if: steps.ache-pcl.outputs.cache-hit != 'true'
+        working-directory: ${{ github.workspace }}/pcl-source
+        run:
+          cmake --build ./build --config Release --target install
+          rm -r ${{ github.workspace }}/pcl-source
+
+
+
+      # - name: Configure project
+      #   run: cmake --preset linux-ninja
+
+      # - name: Build project
+      #   run: cmake --build ./build
