@@ -49,7 +49,9 @@ Find executable (example on Windows):
 
 See [mkv file format](https://docs.microsoft.com/en-us/azure/kinect-dk/record-file-format).
 
-You can download our [example here ](https://drive.phygital.team/d/s/543553085484611131/FFlInsbUEhXWahWC47RYllmc1Ur17Tam-obYgStUWiwc_)
+You can download our example here:
+* [Mirror 1](https://drive.phgtlsm.com/d/s/543553085484611131/FFlInsbUEhXWahWC47RYllmc1Ur17Tam-obYgStUWiwc_)
+* [Mirror 2](https://cloud.mail.ru/public/xhJG/NDZxMbt5N)
 
 It distributed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
 
