@@ -19,7 +19,7 @@
                 "features": [
                     "opengl"
                 ],
-                "version>=": "8.2.0"
+                "version>=": "9.0.0"
             },
             {
                 "name": "proj4",
@@ -53,7 +53,7 @@
         },
         {
             "name": "vtk",
-            "version-string": "8.2.0-13"
+            "version-string": "9.0.1#6"
         },
         {
             "name": "freetype",
